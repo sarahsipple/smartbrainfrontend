@@ -82,7 +82,7 @@ onButtonSubmit = () => {
       Clarifai.FACE_DETECT_MODEL,
       this.state.input)
     .then(response => {
-      console.log('hi', response)
+      // console.log('hi', response)
       if (response) {
         fetch('http://localhost:3000/image', {
           method: 'put',
@@ -122,7 +122,10 @@ render() {
       { route === 'home' 
          ? <div>
             <Logo />
-            <Rank />
+            <Rank 
+            name={this.state.user.name}
+            entries={this.state.user.entries}
+            />
             <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
             <FaceRecognition box={box} imageUrl={imageUrl}/>
           </div>
