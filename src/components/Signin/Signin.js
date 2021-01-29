@@ -5,33 +5,38 @@ class Signin extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            signInEmail: '',
-            signInPassword: ''
+          signInEmail: '',
+          signInPassword: ''
         }
-    }
-    onEmailChange = (e) => {
-        this.setState({signInEmail: e.target.value})
-    }
-    onPasswordChange = (e) => {
-        this.setState({signInPassword: e.target.value})
-    }
-    onSubmitSignIn = () => {
+      }
+    
+      onEmailChange = (event) => {
+        this.setState({signInEmail: event.target.value})
+      }
+    
+      onPasswordChange = (event) => {
+        this.setState({signInPassword: event.target.value})
+      }
+    
+      onSubmitSignIn = () => {
         fetch('http://localhost:3000/signin', {
-            method: 'post',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                email: this.state.signInEmail,
-                password: this.state.signInPassword
-            })
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            email: this.state.signInEmail,
+            password: this.state.signInPassword
+          })
         })
-            .then(response => response.json())
-            .then(user => {
-                if (user.id) {
-                    this.props.loadUser(user)
-                    this.props.onRouteChange('home');
-                }
-            })
-    }
+          .then(response => response.json())
+          .then(user => {
+            if (user.id) {
+              this.props.loadUser(user)
+              this.props.onRouteChange('home');
+            } else {
+                console.log('error in the onSubmitSignIn else')
+            }
+          }).catch(console.log('error in the onSubmitSignIn catch'))
+      }
 
     render() {
         const { onRouteChange } = this.props;

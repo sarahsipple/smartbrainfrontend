@@ -17,7 +17,7 @@ class Register extends React.Component {
         this.setState({email: e.target.value})
     }
     onPasswordChange = (e) => {
-        this.setState({p: e.target.value})
+        this.setState({password: e.target.value})
     }
 
     onSubmitSignIn = () => {
