@@ -6,13 +6,9 @@ import Navigation from './components/Navigation/navigation';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Rank from './components/Rank/rank';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 
-const app = new Clarifai.App({
- apiKey: 'd309cce402434bdda6dc46b74e0e0d12'
-});
 
 const particlesOptions = {
 	particles: {
@@ -81,14 +77,17 @@ onInputChange = (event) => {
 
 onButtonSubmit = () => {
   this.setState({imageUrl: this.state.input});
-  app.models
-    .predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.input)
+  fetch('https://frozen-ravine-64980.herokuapp.com/imageurl', {
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      input: this.state.input
+    })
+  })
+  .then(response => response.json())
     .then(response => {
-      // console.log('hi', response)
       if (response) {
-        fetch('http://localhost:3000/image', {
+        fetch('https://frozen-ravine-64980.herokuapp.com/:3000/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
